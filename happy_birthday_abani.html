@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday,My Love 🎉</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500;1,600&family=Quicksand:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --midnight: #080b24;
+      --plum: #111a45;
+      --plum-light: #1e2a63;
+      --rose: #8ea7ff;
+      --rose-soft: #c7d3ff;
+      --gold: #ffd166;
+      --lavender: #5c72cc;
+      --cream: #ffffff;
+      --pink: #FF46A2;
+      --cream-dim: rgba(255, 255, 255, 0.74);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: linear-gradient(180deg, var(--midnight) 0%, var(--plum) 55%, #060819 100%);
+      color: var(--cream);
+      font-family: 'Quicksand', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .pink{
+      color:var(--pink);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 50;
+      pointer-events: none;
+    }
+
+    .section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 1.5rem;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      color: var(--rose-soft);
+      margin-bottom: 1.6rem;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .eyebrow .name {
+      color: var(--pink);
+      font-size: 1.2rem;
+      font-style: italic;
+      letter-spacing: 0.08em;
+      text-transform: none;
+      text-shadow: 0 0 20px rgba(255, 209, 102, 0.5);
+    }
+
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .reveal-on-scroll.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .in-view .eyebrow {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      line-height: 1.15;
+    }
+
+    /* ---- Opening ---- */
+    #opening h1 {
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      font-style: italic;
+      font-weight: 500;
+      max-width: 16ch;
+      margin-bottom: 2.6rem;
+      color: var(--cream);
+      text-shadow: 0 0 30px rgba(142, 167, 255, 0.45);
+    }
+
+    .btn-primary {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 1.02rem;
+      color: var(--midnight);
+      background: linear-gradient(135deg, var(--rose), var(--gold));
+      border: none;
+      padding: 1rem 2.2rem;
+      border-radius: 100px;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(142, 167, 255, 0.4);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 14px 38px rgba(142, 167, 255, 0.55);
+    }
+
+    .btn-primary:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 4px;
+    }
+
+    /* ---- Reveal ---- */
+    .mega-title {
+      font-size: clamp(2.4rem, 8vw, 5rem);
+      margin-bottom: 1.6rem;
+    }
+
+    .mega-title .name {
+      color: var(--gold);
+      font-style: italic;
+      text-shadow: 0 0 40px rgba(255, 209, 102, 0.5);
+    }
+
+    .sub-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      font-style: italic;
+      color: var(--cream-dim);
+    }
+
+    .sub-line.emphasis {
+      color: var(--rose-soft);
+      margin-top: 0.3rem;
+      font-weight: 600;
+    }
+
+    .countdown-wrap {
+      margin-top: 3rem;
+      display: flex;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .countdown-unit {
+      min-width: 76px;
+      background: rgba(142, 167, 255, 0.08);
+      border: 1px solid rgba(199, 211, 255, 0.28);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 0.9rem 0.6rem;
+      box-shadow: 0 0 24px rgba(142, 167, 255, 0.15);
+    }
+
+    .countdown-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--rose-soft);
+      display: block;
+      text-shadow: 0 0 16px rgba(142, 167, 255, 0.6);
+    }
+
+    .countdown-label {
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+    }
+
+    .countdown-arrived {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      color: var(--gold);
+    }
+
+    .scroll-cue {
+      margin-top: 3.5rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      color: var(--cream-dim);
+      animation: bob 2.4s ease-in-out infinite;
+    }
+
+    @keyframes bob {
+
+      0%,
+      100% {
+        transform: translateY(0);
+        opacity: 0.6;
+      }
+
+      50% {
+        transform: translateY(8px);
+        opacity: 1;
+      }
+    }
+
+    /* ---- For You ---- */
+    .poetic-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.3rem, 3.4vw, 1.9rem);
+      font-style: italic;
+      color: var(--cream-dim);
+      max-width: 26ch;
+      margin: 0.5rem 0;
+    }
+
+    .poetic-line.highlight {
+      color: var(--rose-soft);
+      font-weight: 600;
+      margin-top: 1.6rem;
+    }
+
+    /* ---- Wishes cards ---- */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.6rem;
+      max-width: 900px;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .flip-card {
+      perspective: 1200px;
+      height: 230px;
+      cursor: pointer;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.7s cubic-bezier(.4, .2, .2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.4rem;
+    }
+
+    .flip-front {
+      background: rgba(142, 167, 255, 0.08);
+      border: 1px solid rgba(199, 211, 255, 0.22);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .flip-front .icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .flip-front .title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--rose-soft);
+    }
+
+    .flip-hint {
+      margin-top: 0.8rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      opacity: 0.6;
+    }
+
+    .flip-back {
+      background: linear-gradient(135deg, var(--plum-light), #080b24);
+      border: 1px solid rgba(142, 167, 255, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transform: rotateY(180deg);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      line-height: 1.45;
+      color: var(--cream);
+      overflow-y: auto;
+      align-items: flex-start;
+      justify-content: flex-start;
+      text-align: left;
+      white-space: pre-line;
+      scrollbar-width: thin;
+      scrollbar-color: var(--rose) rgba(255, 255, 255, 0.08);
+    }
+
+    .flip-back::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .flip-back::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+    }
+
+    .flip-back::-webkit-scrollbar-thumb {
+      background: var(--rose);
+      border-radius: 10px;
+    }
+
+    /* ---- Gallery ---- */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.1rem;
+      max-width: 880px;
+      width: 100%;
+    }
+
+    .gallery-slot {
+      aspect-ratio: 1/1;
+      border-radius: 16px;
+      border: 1.5px dashed rgba(199, 211, 255, 0.35);
+      background: rgba(142, 167, 255, 0.06);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--cream-dim);
+      font-size: 0.75rem;
+      padding: 0.6rem;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-slot .icon {
+      font-size: 1.6rem;
+      opacity: 0.7;
+    }
+
+    /* Photo/video actually fills the slot instead of its natural size */
+    .gallery-slot img,
+    .gallery-slot video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+    }
+
+    .gallery-slot.has-media {
+      padding: 0;
+      border-style: solid;
+    }
+
+    /* small play glyph overlay so videos are recognizable at a glance */
+    .gallery-slot.has-video::after {
+      content: "▶";
+      position: absolute;
+      bottom: 0.5rem;
+      right: 0.6rem;
+      font-size: 0.8rem;
+      color: var(--cream);
+      background: rgba(8, 11, 36, 0.55);
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    /* ---- Cake ---- */
+    .cake-scene {
+      margin: 2rem 0 1.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .candle {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .flame {
+      animation: flicker 1.6s ease-in-out infinite;
+      transform-origin: 50% 100%;
+    }
+
+    @keyframes flicker {
+
+      0%,
+      100% {
+        transform: scale(1) rotate(-2deg);
+      }
+
+      50% {
+        transform: scale(1.08) rotate(2deg);
+      }
+    }
+
+    .candle.blown .flame {
+      opacity: 0;
+    }
+
+    .cake-hint {
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--cream-dim);
+    }
+
+    .cake-message {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--gold);
+      max-width: 28ch;
+      margin-top: 1.6rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .cake-message.shown {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---- Letter ---- */
+    .envelope {
+      width: min(320px, 80vw);
+      aspect-ratio: 3/2;
+      background: linear-gradient(135deg, rgba(142, 167, 255, 0.22), rgba(199, 211, 255, 0.1));
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(199, 211, 255, 0.35);
+      border-radius: 10px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 20px 45px rgba(8, 11, 36, 0.5), 0 0 30px rgba(142, 167, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.4s ease;
+    }
+
+    .envelope:hover {
+      transform: translateY(-4px);
+    }
+
+    .envelope::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background: linear-gradient(135deg, rgba(199, 211, 255, 0.3), rgba(255, 209, 102, 0.12));
+      clip-path: polygon(0 0, 50% 55%, 100% 0);
+      border-radius: 10px 10px 0 0;
+    }
+
+    .envelope-label {
+      position: relative;
+      z-index: 2;
+      margin-top: 2.4rem;
+      color: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: 1.05rem;
+      text-shadow: 0 0 14px rgba(142, 167, 255, 0.5);
+    }
+
+    .letter-paper {
+      max-width: 520px;
+      width: 100%;
+      background: rgba(142, 167, 255, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(199, 211, 255, 0.25);
+      color: var(--cream);
+      border-radius: 10px;
+      padding: 2.4rem 2rem;
+      margin-top: 2rem;
+      box-shadow: 0 24px 50px rgba(8, 11, 36, 0.5);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      text-align: left;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.9s ease, opacity 0.9s ease, margin 0.9s ease, padding 0.9s ease;
+    }
+
+    .letter-paper.open {
+      max-height: 1400px;
+      opacity: 1;
+    }
+
+    .letter-paper .sign-off {
+      margin-top: 1.4rem;
+      font-style: italic;
+      color: var(--rose-soft);
+    }
+
+    .letter-image {
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+      box-shadow: 0 10px 26px rgba(8, 11, 36, 0.45);
+      object-fit: cover;
+    }
+
+    .letter-image-caption {
+      text-align: center;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-style: normal;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      color: var(--rose-soft);
+      margin-top: 0.7rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .editable-note {
+      display: inline-block;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      background: rgba(142, 167, 255, 0.18);
+      color: var(--rose-soft);
+      padding: 0.15rem 0.55rem;
+      border-radius: 100px;
+      margin-top: 0.8rem;
+    }
+
+    /* ---- Ending ---- */
+    #ending h2 {
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    #ending p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--cream-dim);
+      max-width: 30ch;
+    }
+
+    .heart-pulse {
+      display: inline-block;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* ---- Lock gate (shown before the birthday date) ---- */
+    #locked-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: linear-gradient(180deg, var(--midnight) 0%, var(--plum) 55%, #060819 100%);
+      transition: opacity 0.9s ease;
+    }
+
+    #locked-gate.fading {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .lock-icon {
+      font-size: 2.4rem;
+      margin-bottom: 1.4rem;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    .lock-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.5rem, 5vw, 2.4rem);
+      color: var(--cream);
+      max-width: 18ch;
+      margin-bottom: 0.6rem;
+      text-shadow: 0 0 30px rgba(255, 122, 168, 0.35);
+    }
+
+    .lock-sub {
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      color: var(--cream-dim);
+      margin-bottom: 2.2rem;
+    }
+
+    .lock-sub .gold {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    #site-content {
+      display: none;
+    }
+
+    #site-content.unlocked {
+      display: block;
+      animation: fadeInSite 1.2s ease;
+    }
+
+    @keyframes fadeInSite {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Lock gate: shown until her birthday arrives -->
+  <div id="locked-gate">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-title">A birthday surprise is waiting for you...</div>
+    <div class="lock-sub">but it only opens on <span class="gold">September 4th</span> 💫</div>
+    <div class="countdown-wrap" id="gate-countdown"></div>
+  </div>
+
+  <div id="site-content">
+
+    <!-- 1. Opening -->
+    <section class="section" id="opening">
+      <p class="eyebrow reveal-on-scroll in-view">A Little Secret...</p>
+      <h1>✨ Something special is waiting for you...</h1>
+      <button class="btn-primary" id="open-surprise-btn">Open Your Birthday Surprise 🎁</button>
+    </section>
+
+    <!-- 2. Birthday Reveal -->
+    <section class="section reveal-on-scroll" id="reveal">
+      <p class="eyebrow">🎂 Birthday Reveal</p>
+      <h2 class="mega-title">Happy Birthday</h2>
+      <h2 class="mega-title">My Love<br><span class="name">Ahanaf Ibnat Abani</span> ❤️</h2>
+      <p class="sub-line">Today isn't just another day...</p>
+      <p class="sub-line emphasis">Today is your day. Only yours.....</p>
+
+      <div class="scroll-cue">↓ keep scrolling</div>
+    </section>
+
+    <!-- 3. This Birthday Is For You -->
+    <section class="section reveal-on-scroll" id="for-you">
+      <p class="eyebrow">🌸 This Is For You<br><span class="name">Madam</span> ❤️</p>
+      <p class="poetic-line">Your smile deserves a thousand celebrations.</p>
+      <p class="poetic-line">Your happiness deserves its own day.</p>
+      <p class="poetic-line highlight">And today, the whole website is about you. ❤️</p>
+    </section>
+
+    <!-- 4. Birthday Wishes -->
+    <section class="section reveal-on-scroll" id="wishes">
+      <p class="eyebrow">🎀 Birthday Wishes</p>
+      <div class="cards-grid">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-face flip-front">
+              <div class="icon">🎂</div>
+              <div class="title">My wish for you</div>
+              <div class="flip-hint">tap to open</div>
+            </div>
+            <div class="flip-face flip-back">
+              শুভ জন্মদিন, <span class="pink" >প্রিয়তমা।❤️</span> 
+
+              আল্লাহ তোমার জীবনের প্রতিটি দিন সহজ করে দিন, প্রতিটি পথে বরকত দান করুন এবং তোমার প্রতিটি ভালো চাওয়া ও
+              স্বপ্ন পূরণ করুন। তোমার জীবনে যেন কখনো শান্তির অভাব না হয়, তোমার মুখের হাসিটা যেন সবসময় অটুট থাকে, আর
+              তোমার প্রতিটি নতুন বছর আগের বছরের চেয়েও সুন্দর হয়ে উঠুক।
+
+              তুমি যেন জীবনের প্রতিটি ধাপে সাফল্য পাও, নিজের স্বপ্নগুলো পূরণ করতে পারো এবং সবসময় এমন মানুষদের মাঝে থাকো
+              যারা তোমাকে সত্যিই ভালোবাসে ও মূল্য দেয়।
+
+              আল্লাহ তোমাকে সুস্থ, নিরাপদ ও সুখী রাখুন। তোমার জন্য যা সবচেয়ে উত্তম, সেটাই যেন তোমার জীবনে লিখে দেন।
+              আমিন। 🤍
+
+              আর আজকের এই বিশেষ দিনে শুধু এটুকুই বলতে চাই
+
+              তোমার হাসিটা যেন কখনো হারিয়ে না যায়।
+              কারণ তোমার হাসিই তোমাকে সবচেয়ে সুন্দর করে তোলে। ❤️
+
+              Happy Birthday, My Love. 🎂💙
+
+            </div>
+          </div>
+        </div>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-face flip-front">
+              <div class="icon">🌷</div>
+              <div class="title">Something I want you to remember</div>
+              <div class="flip-hint">tap to open</div>
+            </div>
+            <p class="flip-face flip-back">
+              তুমি যতটা ভাবো, তার চেয়েও অনেক বেশি special তুমি।
+              কখনো নিজের মূল্য নিয়ে সন্দেহ হলে, মনে রেখো তুমি কারও জীবনে খুব সুন্দর একটা কারণ হয়ে আছো। ❤️
+            </p>
+          </div>
+        </div>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-face flip-front">
+              <div class="icon">✨</div>
+              <div class="title">For The Days Ahead</div>
+              <div class="flip-hint">tap to open</div>
+            </div>
+            <div class="flip-face flip-back">
+              সামনে যত দিন আসবে, সেগুলোতে যেন তুমি আরও বেশি হাসো, আরও বেশি নিজের মতো করে বাঁচো, আর এমন অনেক সুন্দর মুহূর্ত তৈরি করো যেগুলো মনে পড়লে তোমার মুখে হাসি ফুটে উঠবে।
+            </div>
+          </div>
+        </div>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-face flip-front">
+              <div class="icon">💖</div>
+              <div class="title">One promise for your birthday</div>
+              <div class="flip-hint">tap to open</div>
+            </div>
+            <div class="flip-face flip-back">
+              তোমাকে সবসময় perfect একটা জীবন দেওয়ার promise করতে পারি না, কিন্তু তোমার পাশে থেকে imperfect দিনগুলোকে সুন্দর করার চেষ্টা করার promise করতে পারি। ❤️
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Gallery -->
+    <section class="section reveal-on-scroll" id="gallery">
+      <p class="eyebrow">📸 A Little Gallery For The Birthday Girl</p>
+      <div class="gallery-grid">
+        <div class="gallery-slot has-media">
+          <img src="img/her_1.jpg" alt="With Her">
+        </div>
+        <div class="gallery-slot has-media has-video">
+          <video src="img/herv_2.mp4" muted loop playsinline
+            onmouseover="this.play()" onmouseout="this.pause()"></video>
+        </div>
+        <div class="gallery-slot has-media">
+          <img src="img/her_2.jpg" alt="With Her">
+        </div>
+        <div class="gallery-slot has-media">
+          <img src="img/her_3.jpg" alt="With Her">
+        </div>
+        <div class="gallery-slot has-media has-video">
+          <video src="img/herv_1.mp4" muted loop playsinline
+            onmouseover="this.play()" onmouseout="this.pause()"></video>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Cake -->
+    <section class="section reveal-on-scroll" id="cake">
+      <p class="eyebrow">🎂 Make A Wish</p>
+      <div class="cake-scene">
+        <svg id="candle-svg" class="candle" width="220" height="220" viewBox="0 0 220 220" role="button"
+          aria-label="Blow out the candle to make a wish" tabindex="0">
+          <!-- plate -->
+          <ellipse cx="110" cy="200" rx="90" ry="10" fill="#ffffff" opacity="0.08" />
+          <!-- cake base -->
+          <rect x="45" y="150" width="130" height="45" rx="8" fill="#2a3878" />
+          <rect x="45" y="150" width="130" height="14" rx="6" fill="#8ea7ff" />
+          <!-- cake top layer -->
+          <rect x="65" y="118" width="90" height="36" rx="8" fill="#374a9e" />
+          <rect x="65" y="118" width="90" height="12" rx="6" fill="#c7d3ff" />
+          <!-- candle stick -->
+          <rect x="103" y="72" width="14" height="46" rx="3" fill="#ffd166" />
+          <rect x="103" y="72" width="14" height="10" fill="#c7d3ff" />
+          <!-- flame -->
+          <g class="flame">
+            <ellipse cx="110" cy="58" rx="9" ry="16" fill="#ffb238" />
+            <ellipse cx="110" cy="62" rx="5" ry="9" fill="#fff2c2" />
+          </g>
+        </svg>
+        <div class="cake-hint">tap the flame to blow it out and make a wish</div>
+      </div>
+      <p class="cake-message" id="cake-message">I hope this year brings you everything you've been wishing for. ❤️</p>
+    </section>
+
+    <!-- 7. Letter -->
+    <section class="section reveal-on-scroll" id="letter">
+      <p class="eyebrow">💌 One Last Thing…</p>
+      <div class="envelope" id="envelope">
+        <div class="envelope-label">tap to open</div>
+      </div>
+      <div class="letter-paper" id="letter-paper">
+        <img class="letter-image" id="letter-image"
+          src="img/withher.jpeg"
+          alt="A photo for her">
+        <p class="letter-image-caption">Happy birthday Jaaanu</p>
+      </div>
+    </section>
+
+    <!-- 8. Ending -->
+    <section class="section reveal-on-scroll" id="ending">
+      <h2>🎉 Happy Birthday Again, My Love <span class="heart-pulse">❤️</span></h2>
+      <p>Here's to you, today and always.</p>
+    </section>
+
+  </div><!-- /#site-content -->
+
+  <script>
+    /* ---------------- Ambient background: stars + drifting hearts ---------------- */
+    const bgCanvas = document.getElementById('bg-canvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    let W, H;
+    function resizeBg() {
+      W = bgCanvas.width = window.innerWidth;
+      H = bgCanvas.height = document.body.scrollHeight;
+    }
+    resizeBg();
+    window.addEventListener('resize', resizeBg);
+
+    const stars = Array.from({ length: 90 }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      r: Math.random() * 1.6 + 0.4,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.02 + 0.01
+    }));
+
+    const hearts = Array.from({ length: 14 }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      size: Math.random() * 10 + 8,
+      speed: Math.random() * 0.15 + 0.05,
+      drift: Math.random() * 0.6 - 0.3,
+      opacity: Math.random() * 0.25 + 0.08
+    }));
+
+    function drawHeart(ctx, x, y, size, opacity) {
+      ctx.save();
+      ctx.globalAlpha = opacity;
+      ctx.fillStyle = '#a8b8ff';
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.bezierCurveTo(x - size / 2, y - size / 2, x - size, y + size / 3, x, y + size);
+      ctx.bezierCurveTo(x + size, y + size / 3, x + size / 2, y - size / 2, x, y);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    let t = 0;
+    function animateBg() {
+      bgCtx.clearRect(0, 0, W, H);
+      t += 1;
+      stars.forEach(s => {
+        const tw = 0.5 + 0.5 * Math.sin(t * s.speed + s.phase);
+        bgCtx.globalAlpha = 0.25 + tw * 0.55;
+        bgCtx.fillStyle = '#ffd166';
+        bgCtx.beginPath();
+        bgCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        bgCtx.fill();
+      });
+      bgCtx.globalAlpha = 1;
+      hearts.forEach(h => {
+        h.y -= h.speed;
+        h.x += h.drift * 0.05;
+        if (h.y < -20) { h.y = H + 20; h.x = Math.random() * W; }
+        drawHeart(bgCtx, h.x, h.y, h.size, h.opacity);
+      });
+      requestAnimationFrame(animateBg);
+    }
+    animateBg();
+    window.addEventListener('load', resizeBg);
+
+    /* ---------------- Scroll reveal ---------------- */
+    const revealEls = document.querySelectorAll('.reveal-on-scroll');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, { threshold: 0.25 });
+    revealEls.forEach(el => io.observe(el));
+
+    /* ---------------- Open surprise button ---------------- */
+    document.getElementById('open-surprise-btn').addEventListener('click', () => {
+      document.getElementById('reveal').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    /* ---------------- Birthday gate: locked until Sept 4 arrives ---------------- */
+    // Her birthday this year. Once "now" reaches this moment, the full site unlocks.
+    function getBirthdayTarget() {
+      const now = new Date();
+      return new Date(now.getFullYear(), 8, 4, 0, 0, 0); // month is 0-indexed: 8 = September
+    }
+    const lockedGate = document.getElementById('locked-gate');
+    const siteContent = document.getElementById('site-content');
+    const gateCountdown = document.getElementById('gate-countdown');
+    let unlocked = false;
+
+    function unlockSite() {
+      if (unlocked) return;
+      unlocked = true;
+      lockedGate.classList.add('fading');
+      siteContent.classList.add('unlocked');
+      setTimeout(() => {
+        lockedGate.style.display = 'none';
+        resizeBg();
+      }, 950);
+    }
+
+    function renderGate() {
+      const target = getBirthdayTarget();
+      const now = new Date();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        unlockSite();
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / (1000 * 60)) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+      gateCountdown.innerHTML = `
+    <div class="countdown-unit"><span class="countdown-number">${days}</span><span class="countdown-label">days</span></div>
+    <div class="countdown-unit"><span class="countdown-number">${hours}</span><span class="countdown-label">hours</span></div>
+    <div class="countdown-unit"><span class="countdown-number">${mins}</span><span class="countdown-label">mins</span></div>
+    <div class="countdown-unit"><span class="countdown-number">${secs}</span><span class="countdown-label">secs</span></div>
+  `;
+    }
+
+    // Check immediately, then keep checking every second so the site auto-unlocks
+    // the moment the birthday arrives, even if the page was left open overnight.
+   renderGate();
+   setInterval(renderGate, 1000);
+
+    /* ---------------- Flip cards ---------------- */
+    document.querySelectorAll('.flip-card').forEach(card => {
+      card.addEventListener('click', () => card.classList.toggle('flipped'));
+    });
+
+    /* ---------------- Cake: blow candle -> confetti -> message ---------------- */
+    const candle = document.getElementById('candle-svg');
+    const cakeMessage = document.getElementById('cake-message');
+    let blown = false;
+    function blowCandle() {
+      if (blown) return;
+      blown = true;
+      candle.classList.add('blown');
+      cakeMessage.classList.add('shown');
+      launchConfetti();
+    }
+    candle.addEventListener('click', blowCandle);
+    candle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); blowCandle(); }
+    });
+
+    /* ---------------- Confetti ---------------- */
+    const confettiCanvas = document.getElementById('confetti-canvas');
+    const cCtx = confettiCanvas.getContext('2d');
+    function resizeConfetti() {
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+    }
+    resizeConfetti();
+    window.addEventListener('resize', resizeConfetti);
+
+    const confettiColors = ['#8ea7ff', '#ffd166', '#c7d3ff', '#ffffff', '#5c72cc'];
+    let particles = [];
+    function launchConfetti() {
+      particles = Array.from({ length: 140 }, () => ({
+        x: window.innerWidth / 2 + (Math.random() - 0.5) * 120,
+        y: window.innerHeight * 0.55,
+        vx: (Math.random() - 0.5) * 8,
+        vy: Math.random() * -9 - 3,
+        size: Math.random() * 7 + 4,
+        color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
+        rot: Math.random() * 360,
+        vr: (Math.random() - 0.5) * 10,
+        life: 0
+      }));
+      requestAnimationFrame(confettiLoop);
+    }
+    function confettiLoop() {
+      cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      let alive = false;
+      particles.forEach(p => {
+        p.vy += 0.22;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vr;
+        p.life += 1;
+        if (p.y < confettiCanvas.height + 20 && p.life < 260) {
+          alive = true;
+          cCtx.save();
+          cCtx.translate(p.x, p.y);
+          cCtx.rotate(p.rot * Math.PI / 180);
+          cCtx.fillStyle = p.color;
+          cCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+          cCtx.restore();
+        }
+      });
+      if (alive) {
+        requestAnimationFrame(confettiLoop);
+      } else {
+        cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      }
+    }
+
+    /* ---------------- Envelope / letter ---------------- */
+    const envelope = document.getElementById('envelope');
+    const letterPaper = document.getElementById('letter-paper');
+    envelope.addEventListener('click', () => {
+      letterPaper.classList.toggle('open');
+    });
+  </script>
+</body>
+
+</html>
